@@ -5,14 +5,7 @@
     "name": "Beyond the Paywall",
     "version": "0.1.8",
     "homepage_url": "https://code.stanford.edu/gjmartin/beyond_the_paywall/",
-    "browser_specific_settings": {
-      "gecko": {
-        "id": "beyond-the-paywall@rally.mozilla.org",
-        "strict_min_version": "87.0"
-      }
-    },
     "permissions": [
-      "<all_urls>",
       "idle",
       "notifications",
       "storage",
@@ -22,13 +15,26 @@
       "webRequest",
       "webRequestBlocking"
     ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
     "icons": {
       "38": "icon.png"
     },
     "browser_action": {},
     "background": {
-      "scripts": [
-        "dist/background.js"
-      ]
-    }
+      "service_worker": "dist/background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": [
+          "dist/webScience/pageManager.content.js",
+          "dist/webScience/pageNavigation.content.js",
+          "dist/content-scripts/page-ads.js"
+        ]
+      }
+    ]
   }
