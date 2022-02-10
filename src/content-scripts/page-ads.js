@@ -60,7 +60,7 @@ const pageAds = function () {
        * @returns {void}
        */
       function sendAdsToBackground(document, ads) {
-          browser.runtime.sendMessage({
+          chrome.runtime.sendMessage({
               type: "WebScience.advertisements",
               pageId: pageManager.pageId,
               url : document.location.href,

@@ -15,31 +15,43 @@ import {
   initialize 
 } from "./StudyModule";
 
+console.log("imports complete")
 // Initialize the Rally object
-const rally = new Rally();
-const DEV_MODE = __ENABLE_DEVELOPER_MODE__;
-rally.initialize(
-  // A sample key id used for encrypting data.
-  "sgsb-beyond-the-paywall",
-  // A sample *valid* JWK object for the encryption.
-  {
-    "crv": "P-256",
-    "kid": "sgsb-beyond-the-paywall",
-    "kty": "EC",
-    "x": "sA0TUNoyo8jGrZgIFa4_8XKYL70GdjH0jniSmGtTw4w",
-    "y": "YQwnO-ExsKc8c-fUSkqZ-ud11Ds2XkEYJGoR4-926Fw"
-  },
-  // The following constant is automatically provided by
-  // the build system.
-  __ENABLE_DEVELOPER_MODE__,  
-  stateChangeCallback
-).then(resolve => {
-  // Initialize the study and start it.
-  initialize(rally, DEV_MODE);
-}, reject =>{
-  // Do not start the study in this case. Something
-  // went wrong.
-});
+const enableDevMode = Boolean(__ENABLE_DEVELOPER_MODE__);
+const schemaNamespace = "sgsb-beyond-the-paywall";
+
+const publicKey = {
+  "crv": "P-256",
+  "kid": "sgsb-beyond-the-paywall",
+  "kty": "EC",
+  "x": "sA0TUNoyo8jGrZgIFa4_8XKYL70GdjH0jniSmGtTw4w",
+  "y": "YQwnO-ExsKc8c-fUSkqZ-ud11Ds2XkEYJGoR4-926Fw"
+}
+const rally = new Rally({ enableDevMode, schemaNamespace, publicKey, stateChangeCallback });
+initialize(rally, enableDevMode)
+// rally.initialize(
+//   // A sample key id used for encrypting data.
+//   "sgsb-beyond-the-paywall",
+//   // A sample *valid* JWK object for the encryption.
+//   {
+//     "crv": "P-256",
+//     "kid": "sgsb-beyond-the-paywall",
+//     "kty": "EC",
+//     "x": "sA0TUNoyo8jGrZgIFa4_8XKYL70GdjH0jniSmGtTw4w",
+//     "y": "YQwnO-ExsKc8c-fUSkqZ-ud11Ds2XkEYJGoR4-926Fw"
+//   },
+//   // The following constant is automatically provided by
+//   // the build system.
+//   __ENABLE_DEVELOPER_MODE__,  
+//   stateChangeCallback
+// ).then(resolve => {
+//   console.log("rally init then block")
+//   // Initialize the study and start it.
+//   initialize(rally, DEV_MODE);
+// }, reject =>{
+//   // Do not start the study in this case. Something
+//   // went wrong.
+// });
 
 function stateChangeCallback(newState) {
   console.log(newState);

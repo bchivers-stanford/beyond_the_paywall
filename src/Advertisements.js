@@ -35,7 +35,7 @@ export async function startMeasurement ({
 
   // Register the content script for measuring advertisement info
   // The CSS selectors file is needed to find ads on the page
-  await browser.contentScripts.register ({
+  await chrome.contentScripts.register ({
     matches: contentScriptMatches,
     js: [
       {
